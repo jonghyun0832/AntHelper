@@ -5,6 +5,10 @@ plugins {
     alias(libs.plugins.android.hilt)
 }
 
+hilt {
+    enableAggregatingTask = false
+}
+
 android {
     namespace = "com.example.anthelper"
     compileSdk = 36
