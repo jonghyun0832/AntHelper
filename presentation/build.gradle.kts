@@ -45,8 +45,16 @@ android {
 dependencies {
     implementation(project(":domain"))
 
+    // Hilt 설정
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
+
+    // Compose Navigation
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.navigation.hilt)
+
+    // Material Icon Extended
+    implementation(libs.androidx.compose.material)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
