@@ -8,29 +8,20 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.ReadOnlyComposable
+import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import com.example.presentation.theme.color.DarkColorScheme
+import com.example.presentation.theme.color.ExtendedColors
+import com.example.presentation.theme.color.LightColorScheme
+import com.example.presentation.theme.color.extendedColorDark
+import com.example.presentation.theme.color.extendedColorLight
 
-private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
-)
-
-private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
-)
+val LocalExtendedColors = staticCompositionLocalOf<ExtendedColors> {
+    error("ExtendedColor is not provided")
+}
 
 @Composable
 fun AntHelperTheme(
@@ -44,14 +35,23 @@ fun AntHelperTheme(
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
-
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
 
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = content
-    )
+    val extended = if (darkTheme) extendedColorDark else extendedColorLight
+
+    CompositionLocalProvider(LocalExtendedColors provides extended) {
+        MaterialTheme(
+            colorScheme = colorScheme,
+            typography = Typography,
+            shapes = Shapes,
+            content = content
+        )
+    }
 }
+
+val MaterialTheme.extendedColors: ExtendedColors
+    @Composable
+    @ReadOnlyComposable
+    get() = LocalExtendedColors.current

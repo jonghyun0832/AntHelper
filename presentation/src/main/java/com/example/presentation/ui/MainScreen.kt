@@ -18,6 +18,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.presentation.navigation.MainNav
+import com.example.presentation.ui.home.HomeScreen
 import com.example.presentation.util.NavigationUtils
 import com.example.presentation.viewmodel.MainViewModel
 
@@ -90,7 +91,7 @@ fun MainNavigationScreen(
         composable(
             route = MainNav.Home.route
         ) {
-            // TODO : Main Screen
+            HomeScreen()
         }
 
         composable(
