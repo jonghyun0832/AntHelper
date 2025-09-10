@@ -25,15 +25,15 @@ sealed class MainNav(
         icon = Icons.Filled.Home
     )
 
-    object Fluctuation : MainNav(
+    object Exchange : MainNav(
         route = NavigationRouteName.MAIN_EXCHANGE,
         title = NavigationTitle.MAIN_EXCHANGE,
         icon = Icons.Filled.AttachMoney
     )
 
-    object Channel : MainNav(
-        route = NavigationRouteName.MAIN_CHANNEL,
-        title = NavigationTitle.MAIN_CHANNEL,
+    object ChartView : MainNav(
+        route = NavigationRouteName.MAIN_CHART_VIEW,
+        title = NavigationTitle.MAIN_CHART_VIEW,
         icon = Icons.Filled.SsidChart
     )
 
@@ -46,7 +46,7 @@ sealed class MainNav(
     companion object {
         fun isMainRoute(route: String?): Boolean {
             return when (route) {
-                NavigationRouteName.MAIN_HOME, NavigationRouteName.MAIN_EXCHANGE, NavigationRouteName.MAIN_CHANNEL, NavigationRouteName.MAIN_NEWS -> true
+                NavigationRouteName.MAIN_HOME, NavigationRouteName.MAIN_EXCHANGE, NavigationRouteName.MAIN_CHART_VIEW, NavigationRouteName.MAIN_NEWS -> true
                 else -> false
             }
         }

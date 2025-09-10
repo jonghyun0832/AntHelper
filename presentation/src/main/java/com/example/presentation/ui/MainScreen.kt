@@ -81,8 +81,8 @@ fun MainTopBar(navHostController: NavHostController, currentRoute: String?) {
 fun MainNavigationBar(navHostController: NavHostController, currentRoute: String?) {
     val navigationItems = listOf(
         MainNav.Home,
-        MainNav.Fluctuation,
-        MainNav.Channel,
+        MainNav.Exchange,
+        MainNav.ChartView,
         MainNav.News
     )
 
@@ -129,13 +129,13 @@ fun MainNavigationScreen(
         }
 
         composable(
-            route = MainNav.Fluctuation.route
+            route = MainNav.Exchange.route
         ) {
             // TODO : Fluctuation Screen
         }
 
         composable(
-            route = MainNav.Channel.route
+            route = MainNav.ChartView.route
         ) {
             // TODO : News Screen
         }

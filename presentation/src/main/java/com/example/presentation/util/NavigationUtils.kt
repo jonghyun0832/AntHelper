@@ -25,8 +25,8 @@ object NavigationUtils {
     fun findDestination(route: String?) : Destination {
         return when(route) {
             NavigationRouteName.MAIN_HOME -> MainNav.Home
-            NavigationRouteName.MAIN_EXCHANGE -> MainNav.Fluctuation
-            NavigationRouteName.MAIN_CHANNEL -> MainNav.Channel
+            NavigationRouteName.MAIN_EXCHANGE -> MainNav.Exchange
+            NavigationRouteName.MAIN_CHART_VIEW -> MainNav.ChartView
             NavigationRouteName.MAIN_NEWS -> MainNav.News
             else -> MainNav.Home
         }
