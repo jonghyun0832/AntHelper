@@ -17,7 +17,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -83,8 +82,8 @@ fun MainNavigationBar(navHostController: NavHostController, currentRoute: String
     val navigationItems = listOf(
         MainNav.Home,
         MainNav.Fluctuation,
-        MainNav.News,
-        MainNav.MyInfo
+        MainNav.Channel,
+        MainNav.News
     )
 
     NavigationBar {
@@ -136,13 +135,13 @@ fun MainNavigationScreen(
         }
 
         composable(
-            route = MainNav.News.route
+            route = MainNav.Channel.route
         ) {
             // TODO : News Screen
         }
 
         composable(
-            route = MainNav.MyInfo.route
+            route = MainNav.News.route
         ) {
             // TODO : MyPage Screen
         }

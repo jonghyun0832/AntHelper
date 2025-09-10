@@ -1,7 +1,7 @@
 package com.example.presentation.navigation
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material.icons.filled.AttachMoney
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Newspaper
 import androidx.compose.material.icons.filled.SsidChart
@@ -26,8 +26,14 @@ sealed class MainNav(
     )
 
     object Fluctuation : MainNav(
-        route = NavigationRouteName.MAIN_FLUCTUATION,
-        title = NavigationTitle.MAIN_FLUCTUATION,
+        route = NavigationRouteName.MAIN_EXCHANGE,
+        title = NavigationTitle.MAIN_EXCHANGE,
+        icon = Icons.Filled.AttachMoney
+    )
+
+    object Channel : MainNav(
+        route = NavigationRouteName.MAIN_CHANNEL,
+        title = NavigationTitle.MAIN_CHANNEL,
         icon = Icons.Filled.SsidChart
     )
 
@@ -37,16 +43,10 @@ sealed class MainNav(
         icon = Icons.Filled.Newspaper
     )
 
-    object MyInfo : MainNav(
-        route = NavigationRouteName.MAIN_MY_INFO,
-        title = NavigationTitle.MAIN_MY_INFO,
-        icon = Icons.Filled.AccountBox
-    )
-
     companion object {
         fun isMainRoute(route: String?): Boolean {
             return when (route) {
-                NavigationRouteName.MAIN_HOME, NavigationRouteName.MAIN_NEWS, NavigationRouteName.MAIN_FLUCTUATION, NavigationRouteName.MAIN_MY_INFO -> true
+                NavigationRouteName.MAIN_HOME, NavigationRouteName.MAIN_EXCHANGE, NavigationRouteName.MAIN_CHANNEL, NavigationRouteName.MAIN_NEWS -> true
                 else -> false
             }
         }
