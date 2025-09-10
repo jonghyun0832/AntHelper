@@ -14,7 +14,9 @@ import androidx.navigation.navDeepLink
 sealed class MainNav(
     override val route: String,
     override val title: String,
-    override val deepLinks: List<NavDeepLink> = listOf(navDeepLink { uriPattern = "${NavigationRouteName.DEEP_LINK_SCHEME}$route" }),
+    override val deepLinks: List<NavDeepLink> = listOf(navDeepLink {
+        uriPattern = "${NavigationRouteName.DEEP_LINK_SCHEME}$route"
+    }),
     val icon: ImageVector
 ) : Destination {
     object Home : MainNav(
@@ -35,11 +37,20 @@ sealed class MainNav(
         icon = Icons.Filled.Newspaper
     )
 
-    object MyPage : MainNav(
+    object MyInfo : MainNav(
         route = NavigationRouteName.MAIN_MY_INFO,
         title = NavigationTitle.MAIN_MY_INFO,
         icon = Icons.Filled.AccountBox
     )
+
+    companion object {
+        fun isMainRoute(route: String?): Boolean {
+            return when (route) {
+                NavigationRouteName.MAIN_HOME, NavigationRouteName.MAIN_NEWS, NavigationRouteName.MAIN_FLUCTUATION, NavigationRouteName.MAIN_MY_INFO -> true
+                else -> false
+            }
+        }
+    }
 }
 
 interface Destination {
