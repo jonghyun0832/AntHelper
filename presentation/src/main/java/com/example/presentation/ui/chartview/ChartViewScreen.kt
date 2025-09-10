@@ -1,10 +1,13 @@
 package com.example.presentation.ui.chartview
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -17,8 +20,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,16 +35,23 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.example.presentation.model.ChartUiModel
 import com.example.presentation.theme.AntHelperTheme
-import com.example.presentation.viewmodel.chartview.ChartViewViewModel
+import com.example.presentation.theme.Dimens
+import com.example.presentation.viewmodel.chartview.ChartViewModel
 
 @Composable
 fun ChartViewScreen(
-    viewModel: ChartViewViewModel = hiltViewModel(),
+    viewModel: ChartViewModel = hiltViewModel(),
     navHostController: NavHostController
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     var searchKeyWord by remember { mutableStateOf("") }
+    val charts by viewModel.charts.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.updateCharts()
+    }
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -54,6 +65,7 @@ fun ChartViewScreen(
             },
             clearKeywordAction = { searchKeyWord = "" }
         )
+        ChartListScreen(charts)
     }
 }
 
@@ -105,6 +117,23 @@ fun SearchBarScreen(
         )
     }
 }
+
+@Composable
+fun ChartListScreen(charts: List<ChartUiModel>) {
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(Dimens.PaddingExtraSmall)
+    ) {
+        items(
+            items = charts,
+            key = { item -> item.id }
+        ) { item ->
+            // TODO : Chart Item Screen
+            Text(text = item.title)
+        }
+    }
+}
+
 
 @Preview
 @Composable
