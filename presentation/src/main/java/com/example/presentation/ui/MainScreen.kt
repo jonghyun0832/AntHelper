@@ -24,6 +24,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.presentation.navigation.MainNav
+import com.example.presentation.ui.chartview.ChartViewScreen
 import com.example.presentation.ui.home.HomeScreen
 import com.example.presentation.util.NavigationUtils
 import com.example.presentation.viewmodel.MainViewModel
@@ -131,19 +132,21 @@ fun MainNavigationScreen(
         composable(
             route = MainNav.Exchange.route
         ) {
-            // TODO : Fluctuation Screen
+            // TODO : Exchange Screen
         }
 
         composable(
             route = MainNav.ChartView.route
         ) {
-            // TODO : News Screen
+            ChartViewScreen(
+                navHostController = navHostController
+            )
         }
 
         composable(
             route = MainNav.News.route
         ) {
-            // TODO : MyPage Screen
+            // TODO : News Screen
         }
     }
 }
