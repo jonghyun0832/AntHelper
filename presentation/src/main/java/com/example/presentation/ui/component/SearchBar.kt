@@ -11,13 +11,17 @@ import androidx.compose.material.icons.filled.Cancel
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.presentation.theme.AntHelperTheme
 
 @Composable
 fun SearchBar(
@@ -65,5 +69,22 @@ fun SearchBar(
             maxLines = 1,
             singleLine = true
         )
+    }
+}
+
+@Preview
+@Composable
+fun PreviewSearchBarScreen() {
+    AntHelperTheme {
+        Surface(
+            color = MaterialTheme.colorScheme.background
+        ) {
+            SearchBar(
+                "test",
+                {},
+                {},
+                {}
+            )
+        }
     }
 }
