@@ -10,3 +10,10 @@ fun String.toChartLocale(): ChartLocale {
         else -> ChartLocale.KR
     }
 }
+
+fun ChartLocale.toDomain(): String {
+    return when (this) {
+        ChartLocale.US -> "US"
+        else -> "KR"
+    }
+}

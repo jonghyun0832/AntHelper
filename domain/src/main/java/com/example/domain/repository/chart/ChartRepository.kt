@@ -4,5 +4,9 @@ import com.example.domain.model.Chart
 import kotlinx.coroutines.flow.Flow
 
 interface ChartRepository {
-    suspend fun getCharts(): Flow<List<Chart>>
+    fun getCharts(): Flow<List<Chart>>
+
+    suspend fun insertChart(chart: Chart)
+
+    suspend fun deleteChart(id: String)
 }

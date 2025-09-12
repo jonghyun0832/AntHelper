@@ -21,3 +21,14 @@ fun Chart.toUiModel(): ChartUiModel {
         locale = locale.toChartLocale()
     )
 }
+
+fun ChartUiModel.toDomain(): Chart {
+    return Chart(
+        id = id,
+        title = title,
+        description = description,
+        imageUrl = imageUrl,
+        bookmark = bookmark,
+        locale = locale.toDomain()
+    )
+}

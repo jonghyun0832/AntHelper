@@ -1,20 +1,26 @@
 package com.example.presentation.ui.chartview
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.tooling.preview.Preview
@@ -37,35 +43,45 @@ fun ChartViewScreen(
     val charts by viewModel.charts.collectAsState()
     val scrollState = rememberLazyListState()
 
-    LaunchedEffect(Unit) {
-        viewModel.updateCharts()
-    }
-
     // TODO : 무한 스크롤 구현
 
-    Column(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        SearchBar(
-            keyword = searchKeyWord,
-            onValueChange = { searchKeyWord = it },
-            searchAction = {
-                // TODO : 검색 결과 이동 or 동작 구현
-                keyboardController?.hide()
-            },
-            clearKeywordAction = { searchKeyWord = "" }
-        )
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(Dimens.PaddingSmall),
-            state = scrollState
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier.fillMaxSize()
         ) {
-            items(
-                items = charts,
-                key = { item -> item.id }
-            ) { item ->
-                ChartItem(item)
+            SearchBar(
+                keyword = searchKeyWord,
+                onValueChange = { searchKeyWord = it },
+                searchAction = {
+                    // TODO : 검색 결과 이동 or 동작 구현
+                    keyboardController?.hide()
+                },
+                clearKeywordAction = { searchKeyWord = "" }
+            )
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(Dimens.PaddingSmall),
+                state = scrollState
+            ) {
+                items(
+                    items = charts,
+                    key = { item -> item.id }
+                ) { item ->
+                    ChartItem(item)
+                }
             }
+        }
+        // TODO : 차트 추가 화면으로 이동
+        FloatingActionButton(
+            onClick = { viewModel.insertChart() },
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(Dimens.PaddingExtraSmall)
+        ) {
+            Icon(
+                imageVector = Icons.Filled.Add,
+                contentDescription = "Add Chart"
+            )
         }
     }
 }
