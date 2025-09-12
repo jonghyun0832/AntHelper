@@ -1,4 +1,4 @@
-package com.example.presentation.ui.chartview
+package com.example.presentation.ui.chart
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border

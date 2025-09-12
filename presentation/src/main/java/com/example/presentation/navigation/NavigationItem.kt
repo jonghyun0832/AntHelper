@@ -9,7 +9,11 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDeepLink
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
+import com.example.presentation.model.ChartUiModel
+import com.example.presentation.util.GsonUtils
 
 sealed class MainNav(
     override val route: String,
@@ -50,6 +54,34 @@ sealed class MainNav(
                 else -> false
             }
         }
+    }
+}
+
+object ChartEnrollNav: DestinationArg<ChartUiModel?> {
+    override val route: String = NavigationRouteName.CHART_ENROLL
+    override val title: String = NavigationTitle.CHART_ENROLL
+    override val deepLinks: List<NavDeepLink> = listOf(
+        navDeepLink { uriPattern = "${NavigationRouteName.DEEP_LINK_SCHEME}$route" }
+    )
+    override val argName: String = "chart"
+    override val arguments: List<NamedNavArgument> = listOf(navArgument(argName) {
+        type = NavType.StringType
+        nullable = true
+        defaultValue = null
+    })
+
+    override fun navigateWithArg(item: ChartUiModel?): String {
+        return if (item == null) {
+            route
+        } else {
+            val arg = GsonUtils.toJson(item)
+            "$route/$arg"
+        }
+    }
+
+    override fun findArgument(navBackStackEntry: NavBackStackEntry): ChartUiModel? {
+        val chartString = navBackStackEntry.arguments?.getString(argName)
+        return GsonUtils.fromJson<ChartUiModel>(chartString)
     }
 }
 

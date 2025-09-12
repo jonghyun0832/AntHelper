@@ -1,4 +1,4 @@
-package com.example.presentation.ui.chartview
+package com.example.presentation.ui.chart
 
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxWidth

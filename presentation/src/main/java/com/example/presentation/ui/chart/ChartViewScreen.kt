@@ -1,4 +1,4 @@
-package com.example.presentation.ui.chartview
+package com.example.presentation.ui.chart
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
@@ -15,6 +16,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -28,10 +30,15 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.presentation.model.ChartLocale
 import com.example.presentation.model.ChartUiModel
+import com.example.presentation.navigation.ChartEnrollNav
 import com.example.presentation.theme.AntHelperTheme
 import com.example.presentation.theme.Dimens
 import com.example.presentation.ui.component.SearchBar
-import com.example.presentation.viewmodel.chartview.ChartViewModel
+import com.example.presentation.util.NavigationUtils
+import com.example.presentation.viewmodel.chart.ChartAction
+import com.example.presentation.viewmodel.chart.ChartEvent
+import com.example.presentation.viewmodel.chart.ChartViewModel
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun ChartViewScreen(
@@ -42,6 +49,19 @@ fun ChartViewScreen(
     var searchKeyWord by remember { mutableStateOf("") }
     val charts by viewModel.charts.collectAsState()
     val scrollState = rememberLazyListState()
+
+    LaunchedEffect(Unit) {
+        viewModel.eventFlow.collectLatest { event ->
+            when (event) {
+                is ChartEvent.OpenEnrollScreen -> {
+                    NavigationUtils.navigate(
+                        navHostController = navHostController,
+                        routeName = ChartEnrollNav.navigateWithArg(null)
+                    )
+                }
+            }
+        }
+    }
 
     // TODO : 무한 스크롤 구현
 
@@ -71,12 +91,12 @@ fun ChartViewScreen(
                 }
             }
         }
-        // TODO : 차트 추가 화면으로 이동
         FloatingActionButton(
-            onClick = { viewModel.insertChart() },
+            onClick = { viewModel.dispatch(ChartAction.ClickEnrollChart) },
+            shape = CircleShape,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(Dimens.PaddingExtraSmall)
+                .padding(end = Dimens.PaddingLarge, bottom = Dimens.PaddingLarge)
         ) {
             Icon(
                 imageVector = Icons.Filled.Add,

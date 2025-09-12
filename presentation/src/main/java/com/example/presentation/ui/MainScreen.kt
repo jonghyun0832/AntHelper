@@ -23,8 +23,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.presentation.navigation.ChartEnrollNav
 import com.example.presentation.navigation.MainNav
-import com.example.presentation.ui.chartview.ChartViewScreen
+import com.example.presentation.ui.chart.ChartEnrollScreen
+import com.example.presentation.ui.chart.ChartViewScreen
 import com.example.presentation.ui.home.HomeScreen
 import com.example.presentation.util.NavigationUtils
 import com.example.presentation.viewmodel.MainViewModel
@@ -139,6 +141,17 @@ fun MainNavigationScreen(
             route = MainNav.ChartView.route
         ) {
             ChartViewScreen(
+                navHostController = navHostController
+            )
+        }
+
+        composable(
+            route = ChartEnrollNav.route,
+            arguments = ChartEnrollNav.arguments
+            ) {
+            val chart = ChartEnrollNav.findArgument(it)
+            ChartEnrollScreen(
+                chart = chart,
                 navHostController = navHostController
             )
         }

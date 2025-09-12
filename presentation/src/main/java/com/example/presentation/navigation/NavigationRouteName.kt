@@ -6,4 +6,5 @@ object NavigationRouteName {
     const val MAIN_EXCHANGE = "main_exchange"
     const val MAIN_CHART_VIEW = "main_chart_view"
     const val MAIN_NEWS = "main_news"
+    const val CHART_ENROLL = "chart_enroll"
 }

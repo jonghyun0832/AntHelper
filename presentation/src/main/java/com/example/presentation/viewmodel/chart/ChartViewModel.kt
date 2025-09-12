@@ -1,4 +1,4 @@
-package com.example.presentation.viewmodel.chartview
+package com.example.presentation.viewmodel.chart
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,6 +8,8 @@ import com.example.presentation.model.ChartUiModel
 import com.example.presentation.model.toDomain
 import com.example.presentation.model.toUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
@@ -19,6 +21,9 @@ import javax.inject.Inject
 class ChartViewModel @Inject constructor(
     private val chartRepository: ChartRepository
 ) : ViewModel()  {
+    private val _eventFlow = MutableSharedFlow<ChartEvent>()
+    val eventFlow : SharedFlow<ChartEvent> = _eventFlow
+
     val charts: StateFlow<List<ChartUiModel>> = chartRepository.getCharts().map { charts ->
         charts.map { it.toUiModel() }
     }.stateIn(
@@ -36,7 +41,17 @@ class ChartViewModel @Inject constructor(
         locale = ChartLocale.KR
     )
 
-    fun insertChart(chart: ChartUiModel = tempChart) {
+    fun dispatch(action: ChartAction) {
+        when(action) {
+            is ChartAction.ClickEnrollChart -> {
+                viewModelScope.launch {
+                    _eventFlow.emit(ChartEvent.OpenEnrollScreen)
+                }
+            }
+        }
+    }
+
+    fun insertChart(chart: ChartUiModel) {
         viewModelScope.launch {
             chartRepository.insertChart(tempChart.toDomain())
         }
@@ -47,4 +62,12 @@ class ChartViewModel @Inject constructor(
             chartRepository.deleteChart(id)
         }
     }
+}
+
+sealed class ChartAction {
+    data object ClickEnrollChart : ChartAction()
+}
+
+sealed class ChartEvent {
+    data object OpenEnrollScreen : ChartEvent()
 }
