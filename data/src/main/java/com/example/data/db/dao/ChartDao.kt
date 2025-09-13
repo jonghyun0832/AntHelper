@@ -20,4 +20,7 @@ interface ChartDao {
 
     @Query("UPDATE chart SET bookmark = :isBookmarked WHERE id = :id")
     suspend fun updateBookmark(id: String, isBookmarked: Boolean)
+
+    @Query("UPDATE chart SET description = :description WHERE id = :id")
+    suspend fun updateChartDescription(id: String, description: String)
 }

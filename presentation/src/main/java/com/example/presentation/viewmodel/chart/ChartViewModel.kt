@@ -71,6 +71,12 @@ class ChartViewModel @Inject constructor(
             chartRepository.updateBookmark(chart.id, !chart.bookmark)
         }
     }
+
+    fun updateChartDescription(id: String, description: String) {
+        viewModelScope.launch {
+            chartRepository.updateChartDescription(id, description)
+        }
+    }
 }
 
 sealed class ChartAction {

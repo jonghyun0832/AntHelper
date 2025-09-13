@@ -50,6 +50,7 @@ fun ChartViewScreen(
     val charts by viewModel.charts.collectAsState()
     val scrollState = rememberLazyListState()
 
+    var selectedChartId by remember { mutableStateOf("") }
     var showDialog by remember { mutableStateOf(false) }
     var userInput by remember { mutableStateOf("") }
 
@@ -95,19 +96,20 @@ fun ChartViewScreen(
                         showDialog = showDialog,
                         userInput = userInput,
                         onUserInputChange = { userInput = it },
-                        onEditDescriptionClick = {
+                        onEditDescriptionClick = { chart ->
                             showDialog = true
-                            userInput = item.description
+                            selectedChartId = chart.id
+                            userInput = chart.description
                         },
                         onBookmarkClick = { viewModel.dispatch(ChartAction.ClickBookmark(it)) },
                         onDismiss = {
                             showDialog = false
-                            userInput = item.description
                         },
                         onConfirm = {
                             showDialog = false
-                            // TODO : 수정한 내용 Chart Description에 저장
-                        }
+                            viewModel.updateChartDescription(selectedChartId, userInput)
+                        },
+                        onChartClick = {} // TODO : 차트 상세화면 이동
                     )
                 }
             }
@@ -133,15 +135,16 @@ fun ChartItem(
     showDialog: Boolean,
     userInput: String,
     onUserInputChange: (String) -> Unit,
-    onEditDescriptionClick: () -> Unit = {},
-    onBookmarkClick: (ChartUiModel) -> Unit = {},
-    onDismiss: () -> Unit = {},
-    onConfirm: () -> Unit = {}
+    onEditDescriptionClick: (ChartUiModel) -> Unit,
+    onBookmarkClick: (ChartUiModel) -> Unit,
+    onDismiss: () -> Unit,
+    onConfirm: () -> Unit,
+    onChartClick: () -> Unit
 ) {
     ChartCard(
         chart = chart,
-        onChartClick = {}, // TODO : 차트 상세화면 이동
-        onEditDescriptionClick = onEditDescriptionClick,
+        onChartClick = onChartClick,
+        onEditDescriptionClick = { onEditDescriptionClick(chart) },
         onBookmarkClick = onBookmarkClick
     )
 
@@ -177,7 +180,8 @@ fun PreviewChartItem() {
                 onEditDescriptionClick = {},
                 onBookmarkClick = {},
                 onDismiss = {},
-                onConfirm = {}
+                onConfirm = {},
+                onChartClick = {}
             )
         }
     }
@@ -205,7 +209,8 @@ fun PreviewChartItemWithBookmark() {
                 onEditDescriptionClick = {},
                 onBookmarkClick = {},
                 onDismiss = {},
-                onConfirm = {}
+                onConfirm = {},
+                onChartClick = {}
             )
         }
     }

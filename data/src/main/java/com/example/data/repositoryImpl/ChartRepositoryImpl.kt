@@ -29,4 +29,8 @@ class ChartRepositoryImpl @Inject constructor(
     override suspend fun updateBookmark(id: String, isBookmarked: Boolean) {
         chartDao.updateBookmark(id, isBookmarked)
     }
+
+    override suspend fun updateChartDescription(id: String, description: String) {
+        chartDao.updateChartDescription(id, description)
+    }
 }

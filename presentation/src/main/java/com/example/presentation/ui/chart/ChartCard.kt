@@ -48,7 +48,7 @@ fun ChartCard(
             .border(2.dp, MaterialTheme.colorScheme.primary, MaterialTheme.shapes.medium)
             .shadow(elevation = Dimens.PaddingExtraSmall),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background),
-        onClick = {} // TODO : 차트 상세화면으로 이동
+        onClick = onChartClick
     ) {
         Column(
             modifier = Modifier
