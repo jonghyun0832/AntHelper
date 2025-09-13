@@ -9,4 +9,6 @@ interface ChartRepository {
     suspend fun insertChart(chart: Chart)
 
     suspend fun deleteChart(id: String)
+
+    suspend fun updateBookmark(id: String, isBookmarked: Boolean)
 }

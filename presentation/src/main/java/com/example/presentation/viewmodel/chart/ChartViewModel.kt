@@ -43,29 +43,39 @@ class ChartViewModel @Inject constructor(
 
     fun dispatch(action: ChartAction) {
         when(action) {
-            is ChartAction.ClickEnrollChart -> {
+            ChartAction.ClickEnrollChart -> {
                 viewModelScope.launch {
                     _eventFlow.emit(ChartEvent.OpenEnrollScreen)
                 }
             }
+            is ChartAction.ClickBookmark -> {
+                updateBookmark(action.chart)
+            }
         }
     }
 
-    fun insertChart(chart: ChartUiModel) {
+    private fun insertChart(chart: ChartUiModel) {
         viewModelScope.launch {
             chartRepository.insertChart(tempChart.toDomain())
         }
     }
 
-    fun deleteChart(id: String) {
+    private fun deleteChart(id: String) {
         viewModelScope.launch {
             chartRepository.deleteChart(id)
+        }
+    }
+
+    private fun updateBookmark(chart: ChartUiModel) {
+        viewModelScope.launch {
+            chartRepository.updateBookmark(chart.id, !chart.bookmark)
         }
     }
 }
 
 sealed class ChartAction {
     data object ClickEnrollChart : ChartAction()
+    data class ClickBookmark(val chart: ChartUiModel) : ChartAction()
 }
 
 sealed class ChartEvent {

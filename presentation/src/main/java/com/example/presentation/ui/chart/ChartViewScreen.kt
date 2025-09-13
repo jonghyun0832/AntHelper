@@ -87,7 +87,10 @@ fun ChartViewScreen(
                     items = charts,
                     key = { item -> item.id }
                 ) { item ->
-                    ChartItem(item)
+                    ChartItem(
+                        chart = item,
+                        onBookmarkClick = { viewModel.dispatch(ChartAction.ClickBookmark(it)) }
+                    )
                 }
             }
         }
@@ -107,7 +110,10 @@ fun ChartViewScreen(
 }
 
 @Composable
-fun ChartItem(chart: ChartUiModel) {
+fun ChartItem(
+    chart: ChartUiModel,
+    onBookmarkClick: (ChartUiModel) -> Unit = {},
+) {
     var showDialog by remember { mutableStateOf(false) }
     var userInput by remember { mutableStateOf(chart.description) }
 
@@ -115,7 +121,7 @@ fun ChartItem(chart: ChartUiModel) {
         chart = chart,
         onChartClick = {}, // TODO : 차트 상세화면 이동
         onEditDescriptionClick = { showDialog = true },
-        onEditBookmarkClick = {} // TODO : 북마크 수정
+        onBookmarkClick = onBookmarkClick
     )
 
     if (showDialog) {

@@ -38,7 +38,7 @@ fun ChartCard(
     chart: ChartUiModel,
     onChartClick: () -> Unit,
     onEditDescriptionClick: () -> Unit,
-    onEditBookmarkClick: () -> Unit
+    onBookmarkClick: (ChartUiModel) -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -81,7 +81,7 @@ fun ChartCard(
                         )
                     }
                     IconButton(
-                        onClick = onEditBookmarkClick
+                        onClick = { onBookmarkClick(chart) }
                     ) {
                         Icon(
                             imageVector = if (chart.bookmark) Icons.Filled.Star else Icons.Filled.StarBorder,

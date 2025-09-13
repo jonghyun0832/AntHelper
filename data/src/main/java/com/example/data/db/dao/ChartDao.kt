@@ -17,4 +17,7 @@ interface ChartDao {
 
     @Query("DELETE FROM chart WHERE id = :id")
     suspend fun deleteChart(id: String)
+
+    @Query("UPDATE chart SET bookmark = :isBookmarked WHERE id = :id")
+    suspend fun updateBookmark(id: String, isBookmarked: Boolean)
 }
