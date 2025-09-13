@@ -50,6 +50,9 @@ fun ChartViewScreen(
     val charts by viewModel.charts.collectAsState()
     val scrollState = rememberLazyListState()
 
+    var showDialog by remember { mutableStateOf(false) }
+    var userInput by remember { mutableStateOf("") }
+
     LaunchedEffect(Unit) {
         viewModel.eventFlow.collectLatest { event ->
             when (event) {
@@ -89,7 +92,22 @@ fun ChartViewScreen(
                 ) { item ->
                     ChartItem(
                         chart = item,
-                        onBookmarkClick = { viewModel.dispatch(ChartAction.ClickBookmark(it)) }
+                        showDialog = showDialog,
+                        userInput = userInput,
+                        onUserInputChange = { userInput = it },
+                        onEditDescriptionClick = {
+                            showDialog = true
+                            userInput = item.description
+                        },
+                        onBookmarkClick = { viewModel.dispatch(ChartAction.ClickBookmark(it)) },
+                        onDismiss = {
+                            showDialog = false
+                            userInput = item.description
+                        },
+                        onConfirm = {
+                            showDialog = false
+                            // TODO : 수정한 내용 Chart Description에 저장
+                        }
                     )
                 }
             }
@@ -112,30 +130,27 @@ fun ChartViewScreen(
 @Composable
 fun ChartItem(
     chart: ChartUiModel,
+    showDialog: Boolean,
+    userInput: String,
+    onUserInputChange: (String) -> Unit,
+    onEditDescriptionClick: () -> Unit = {},
     onBookmarkClick: (ChartUiModel) -> Unit = {},
+    onDismiss: () -> Unit = {},
+    onConfirm: () -> Unit = {}
 ) {
-    var showDialog by remember { mutableStateOf(false) }
-    var userInput by remember { mutableStateOf(chart.description) }
-
     ChartCard(
         chart = chart,
         onChartClick = {}, // TODO : 차트 상세화면 이동
-        onEditDescriptionClick = { showDialog = true },
+        onEditDescriptionClick = onEditDescriptionClick,
         onBookmarkClick = onBookmarkClick
     )
 
     if (showDialog) {
         ChartMemoDialog(
             userInput = userInput,
-            onValueChange = { userInput = it },
-            onDismiss = {
-                showDialog = false
-                userInput = chart.description
-            },
-            onConfirm = {
-                showDialog = false
-                // TODO : 수정한 내용 Chart Description에 저장
-            }
+            onValueChange = onUserInputChange,
+            onDismiss = onDismiss,
+            onConfirm = onConfirm
         )
     }
 }
@@ -148,14 +163,21 @@ fun PreviewChartItem() {
             color = MaterialTheme.colorScheme.background
         ) {
             ChartItem(
-                ChartUiModel(
+                chart = ChartUiModel(
                     id = "1",
                     title = "Chart",
                     description = "",
                     imageUrl = "",
                     bookmark = false,
                     locale = ChartLocale.KR
-                )
+                ),
+                showDialog = false,
+                userInput = "",
+                onUserInputChange = {},
+                onEditDescriptionClick = {},
+                onBookmarkClick = {},
+                onDismiss = {},
+                onConfirm = {}
             )
         }
     }
@@ -169,14 +191,21 @@ fun PreviewChartItemWithBookmark() {
             color = MaterialTheme.colorScheme.background
         ) {
             ChartItem(
-                ChartUiModel(
+                chart = ChartUiModel(
                     id = "2",
                     title = "Chart With Bookmark Chart With Bookmark",
                     description = "",
                     imageUrl = "",
                     bookmark = true,
                     locale = ChartLocale.KR
-                )
+                ),
+                showDialog = false,
+                userInput = "",
+                onUserInputChange = {},
+                onEditDescriptionClick = {},
+                onBookmarkClick = {},
+                onDismiss = {},
+                onConfirm = {}
             )
         }
     }
