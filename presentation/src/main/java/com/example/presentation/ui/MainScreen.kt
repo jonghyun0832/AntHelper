@@ -133,7 +133,7 @@ fun MainNavigationScreen(
         composable(
             route = MainNav.Home.route
         ) {
-            HomeScreen()
+            HomeScreen(navHostController)
         }
 
         composable(
