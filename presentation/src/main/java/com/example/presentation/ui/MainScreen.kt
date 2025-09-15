@@ -43,7 +43,12 @@ fun MainScreen(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = { MainTopBar(navHostController = navHostController, currentRoute = currentRoute) },
-        bottomBar = { MainNavigationBar(navHostController, currentRoute) }
+        bottomBar = {
+            if (MainNav.isMainRoute(currentRoute)) {
+                MainNavigationBar(navHostController, currentRoute)
+            }
+
+        }
     ) { innerPadding ->
         MainNavigationScreen(
             mainViewModel = mainViewModel,
