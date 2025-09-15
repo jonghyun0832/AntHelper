@@ -14,6 +14,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.presentation.model.ChartModel
 import com.example.presentation.theme.Dimens
+import com.example.presentation.ui.component.button.DashedUploadButton
 import com.example.presentation.ui.component.textfield.OutlinedSingleTextField
 import com.example.presentation.viewmodel.chart.ChartEnrollViewModel
 
@@ -34,6 +35,10 @@ fun ChartEnrollScreen(
             labelString = "종목명을 입력해주세요",
             maxLength = 20
         )
-        Spacer(modifier = Modifier.height(Dimens.PaddingLarge))
+        Spacer(modifier = Modifier.height(Dimens.PaddingExtraLarge))
+        DashedUploadButton(
+            text = "사진 업로드",
+            onClick = {} // TODO : 사진 업로드 로직 구현
+        )
     }
 }
