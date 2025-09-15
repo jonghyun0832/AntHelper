@@ -3,7 +3,6 @@ package com.example.presentation.ui.component
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -37,7 +36,7 @@ fun SearchBar(
             value = keyword,
             onValueChange = onValueChange,
             placeholder = { Text("차트를 검색하세요!") },
-            shape = RoundedCornerShape(percent = 50),
+            shape = MaterialTheme.shapes.extraLarge,
             leadingIcon =  {
                 Icon(
                     imageVector = Icons.Filled.Search,

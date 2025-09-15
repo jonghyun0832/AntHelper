@@ -1,6 +1,7 @@
 package com.example.presentation.util
 
 import androidx.navigation.NavHostController
+import com.example.presentation.navigation.ChartEnrollNav
 import com.example.presentation.navigation.Destination
 import com.example.presentation.navigation.MainNav
 import com.example.presentation.navigation.NavigationRouteName
@@ -28,6 +29,7 @@ object NavigationUtils {
             NavigationRouteName.MAIN_EXCHANGE -> MainNav.Exchange
             NavigationRouteName.MAIN_CHART_VIEW -> MainNav.ChartView
             NavigationRouteName.MAIN_NEWS -> MainNav.News
+            NavigationRouteName.CHART_ENROLL -> ChartEnrollNav
             else -> MainNav.Home
         }
     }
