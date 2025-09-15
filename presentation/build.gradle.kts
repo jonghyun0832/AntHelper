@@ -56,7 +56,11 @@ dependencies {
     // Material Icon Extended
     implementation(libs.androidx.compose.material)
 
+    // Serialize Gson
     implementation(libs.gson)
+
+    // Image Load
+    implementation(libs.coil.compose)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
