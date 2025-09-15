@@ -29,7 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.presentation.model.ChartLocale
-import com.example.presentation.model.ChartUiModel
+import com.example.presentation.model.ChartModel
 import com.example.presentation.navigation.ChartEnrollNav
 import com.example.presentation.theme.AntHelperTheme
 import com.example.presentation.theme.Dimens
@@ -131,12 +131,12 @@ fun ChartViewScreen(
 
 @Composable
 fun ChartItem(
-    chart: ChartUiModel,
+    chart: ChartModel,
     showDialog: Boolean,
     userInput: String,
     onUserInputChange: (String) -> Unit,
-    onEditDescriptionClick: (ChartUiModel) -> Unit,
-    onBookmarkClick: (ChartUiModel) -> Unit,
+    onEditDescriptionClick: (ChartModel) -> Unit,
+    onBookmarkClick: (ChartModel) -> Unit,
     onDismiss: () -> Unit,
     onConfirm: () -> Unit,
     onChartClick: () -> Unit
@@ -166,7 +166,7 @@ fun PreviewChartItem() {
             color = MaterialTheme.colorScheme.background
         ) {
             ChartItem(
-                chart = ChartUiModel(
+                chart = ChartModel(
                     id = "1",
                     title = "Chart",
                     description = "",
@@ -195,7 +195,7 @@ fun PreviewChartItemWithBookmark() {
             color = MaterialTheme.colorScheme.background
         ) {
             ChartItem(
-                chart = ChartUiModel(
+                chart = ChartModel(
                     id = "2",
                     title = "Chart With Bookmark Chart With Bookmark",
                     description = "",

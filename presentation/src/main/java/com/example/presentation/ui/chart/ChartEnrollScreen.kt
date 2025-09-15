@@ -17,13 +17,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.presentation.model.ChartUiModel
+import com.example.presentation.model.ChartModel
 import com.example.presentation.theme.Dimens
 import com.example.presentation.viewmodel.chart.ChartEnrollViewModel
 
 @Composable
 fun ChartEnrollScreen(
-    chart: ChartUiModel? = null,
+    chart: ChartModel? = null,
     navHostController: NavHostController,
     viewModel: ChartEnrollViewModel = hiltViewModel()
 ) {

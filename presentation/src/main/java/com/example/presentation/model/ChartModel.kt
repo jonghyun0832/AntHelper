@@ -2,7 +2,7 @@ package com.example.presentation.model
 
 import com.example.domain.model.Chart
 
-data class ChartUiModel(
+data class ChartModel(
     val id: String,
     val title: String,
     val description: String,
@@ -11,8 +11,8 @@ data class ChartUiModel(
     val locale: ChartLocale
 )
 
-fun Chart.toUiModel(): ChartUiModel {
-    return ChartUiModel(
+fun Chart.toUiModel(): ChartModel {
+    return ChartModel(
         id = id,
         title = title,
         description = description,
@@ -22,7 +22,7 @@ fun Chart.toUiModel(): ChartUiModel {
     )
 }
 
-fun ChartUiModel.toDomain(): Chart {
+fun ChartModel.toDomain(): Chart {
     return Chart(
         id = id,
         title = title,

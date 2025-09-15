@@ -30,15 +30,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.presentation.R
-import com.example.presentation.model.ChartUiModel
+import com.example.presentation.model.ChartModel
 import com.example.presentation.theme.Dimens
 
 @Composable
 fun ChartCard(
-    chart: ChartUiModel,
+    chart: ChartModel,
     onChartClick: () -> Unit,
     onEditDescriptionClick: () -> Unit,
-    onBookmarkClick: (ChartUiModel) -> Unit
+    onBookmarkClick: (ChartModel) -> Unit
 ) {
     Card(
         modifier = Modifier

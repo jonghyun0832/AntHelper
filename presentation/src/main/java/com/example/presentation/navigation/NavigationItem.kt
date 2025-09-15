@@ -12,7 +12,7 @@ import androidx.navigation.NavDeepLink
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
-import com.example.presentation.model.ChartUiModel
+import com.example.presentation.model.ChartModel
 import com.example.presentation.util.GsonUtils
 
 sealed class MainNav(
@@ -57,7 +57,7 @@ sealed class MainNav(
     }
 }
 
-object ChartEnrollNav: DestinationArg<ChartUiModel?> {
+object ChartEnrollNav: DestinationArg<ChartModel?> {
     override val route: String = NavigationRouteName.CHART_ENROLL
     override val title: String = NavigationTitle.CHART_ENROLL
     override val deepLinks: List<NavDeepLink> = listOf(
@@ -70,7 +70,7 @@ object ChartEnrollNav: DestinationArg<ChartUiModel?> {
         defaultValue = null
     })
 
-    override fun navigateWithArg(item: ChartUiModel?): String {
+    override fun navigateWithArg(item: ChartModel?): String {
         return if (item == null) {
             route
         } else {
@@ -79,9 +79,9 @@ object ChartEnrollNav: DestinationArg<ChartUiModel?> {
         }
     }
 
-    override fun findArgument(navBackStackEntry: NavBackStackEntry): ChartUiModel? {
+    override fun findArgument(navBackStackEntry: NavBackStackEntry): ChartModel? {
         val chartString = navBackStackEntry.arguments?.getString(argName)
-        return GsonUtils.fromJson<ChartUiModel>(chartString)
+        return GsonUtils.fromJson<ChartModel>(chartString)
     }
 }
 

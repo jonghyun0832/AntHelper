@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.repository.chart.ChartRepository
 import com.example.presentation.model.ChartLocale
-import com.example.presentation.model.ChartUiModel
+import com.example.presentation.model.ChartModel
 import com.example.presentation.model.toDomain
 import com.example.presentation.model.toUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,7 +24,7 @@ class ChartViewModel @Inject constructor(
     private val _eventFlow = MutableSharedFlow<ChartEvent>()
     val eventFlow : SharedFlow<ChartEvent> = _eventFlow
 
-    val charts: StateFlow<List<ChartUiModel>> = chartRepository.getCharts().map { charts ->
+    val charts: StateFlow<List<ChartModel>> = chartRepository.getCharts().map { charts ->
         charts.map { it.toUiModel() }
     }.stateIn(
         scope = viewModelScope,
@@ -32,7 +32,7 @@ class ChartViewModel @Inject constructor(
         initialValue = emptyList()
     )
 
-    val tempChart = ChartUiModel(
+    val tempChart = ChartModel(
         id = "2",
         title = "차트 이름2",
         description = "차트 관련 기록사항2",
@@ -54,7 +54,7 @@ class ChartViewModel @Inject constructor(
         }
     }
 
-    private fun insertChart(chart: ChartUiModel) {
+    private fun insertChart(chart: ChartModel) {
         viewModelScope.launch {
             chartRepository.insertChart(tempChart.toDomain())
         }
@@ -66,7 +66,7 @@ class ChartViewModel @Inject constructor(
         }
     }
 
-    private fun updateBookmark(chart: ChartUiModel) {
+    private fun updateBookmark(chart: ChartModel) {
         viewModelScope.launch {
             chartRepository.updateBookmark(chart.id, !chart.bookmark)
         }
@@ -81,7 +81,7 @@ class ChartViewModel @Inject constructor(
 
 sealed class ChartAction {
     data object ClickEnrollChart : ChartAction()
-    data class ClickBookmark(val chart: ChartUiModel) : ChartAction()
+    data class ClickBookmark(val chart: ChartModel) : ChartAction()
 }
 
 sealed class ChartEvent {
