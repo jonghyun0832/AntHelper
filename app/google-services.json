@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "809489489271",
+    "project_id": "ant-helper-74cd2",
+    "storage_bucket": "ant-helper-74cd2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:809489489271:android:407f17f79ad2159760d572",
+        "android_client_info": {
+          "package_name": "com.example.anthelper"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAK_v0ugNhIIDSf4_yCAXyJyZIOWgn_Da0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
