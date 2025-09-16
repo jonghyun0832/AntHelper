@@ -2,8 +2,10 @@ package com.example.anthelper.di
 
 import com.example.data.repositoryImpl.ChartRepositoryImpl
 import com.example.data.repositoryImpl.HomeRepositoryImpl
+import com.example.data.repositoryImpl.StockRepositoryImpl
 import com.example.domain.repository.chart.ChartRepository
 import com.example.domain.repository.home.HomeRepository
+import com.example.domain.repository.stock.StockRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -20,4 +22,8 @@ interface RepositoryModule {
     @Binds
     @Singleton
     fun bindHomeRepository(homeRepositoryImpl: HomeRepositoryImpl): HomeRepository
+
+    @Binds
+    @Singleton
+    fun bindStockRepository(stockRepositoryImpl: StockRepositoryImpl): StockRepository
 }
