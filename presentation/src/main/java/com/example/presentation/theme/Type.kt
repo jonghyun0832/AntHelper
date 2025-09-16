@@ -34,7 +34,7 @@ val Typography = Typography(
         fontSize = 24.sp
     ),
     headlineLarge = TextStyle(
-        fontFamily = spoqaThin,
+        fontFamily = spoqaBold,
         fontSize = 32.sp
     ),
     headlineMedium = TextStyle(
@@ -88,4 +88,9 @@ val Typography.dialogButton: TextStyle
 val Typography.underlinedDialogHeadlineMedium: TextStyle
     @Composable get() = headlineMedium.copy(
         textDecoration = TextDecoration.Underline
+    )
+
+val Typography.buttonHeadlineMedium: TextStyle
+    @Composable get() = headlineMedium.copy(
+        fontSize = 24.sp
     )

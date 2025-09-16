@@ -17,6 +17,9 @@ class ChartEnrollViewModel @Inject constructor() : ViewModel() {
     private val _eventFlow = MutableSharedFlow<ChartEnrollEvent>()
     val eventFlow: SharedFlow<ChartEnrollEvent> = _eventFlow
 
+    private val _chartTitle = MutableStateFlow("")
+    val chartTitle: StateFlow<String> = _chartTitle.asStateFlow()
+
     private val _imageUri = MutableStateFlow<Uri?>(null)
     val imageUri: StateFlow<Uri?> = _imageUri.asStateFlow()
 
@@ -27,7 +30,17 @@ class ChartEnrollViewModel @Inject constructor() : ViewModel() {
                     _eventFlow.emit(ChartEnrollEvent.OpenGallery)
                 }
             }
+            ChartEnrollAction.ClickEnrollChart -> {
+                viewModelScope.launch {
+                    // TODO : 차트 정보 등록
+                    _eventFlow.emit(ChartEnrollEvent.CompleteEnroll)
+                }
+            }
         }
+    }
+
+    fun updateChartTitle(title: String) {
+        _chartTitle.value = title
     }
 
     fun updateImageUri(uri: Uri?) {
@@ -37,8 +50,10 @@ class ChartEnrollViewModel @Inject constructor() : ViewModel() {
 
 sealed class ChartEnrollAction {
     data object ClickUploadImage : ChartEnrollAction()
+    data object ClickEnrollChart : ChartEnrollAction()
 }
 
 sealed class ChartEnrollEvent {
     data object OpenGallery : ChartEnrollEvent()
+    data object CompleteEnroll : ChartEnrollEvent()
 }

@@ -1,11 +1,12 @@
 package com.example.presentation.ui.chart
 
 import android.net.Uri
-import android.util.Log
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -17,20 +18,21 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -39,6 +41,7 @@ import coil.compose.AsyncImage
 import com.example.presentation.R
 import com.example.presentation.model.ChartModel
 import com.example.presentation.theme.Dimens
+import com.example.presentation.theme.buttonHeadlineMedium
 import com.example.presentation.ui.component.button.DashedUploadButton
 import com.example.presentation.ui.component.textfield.OutlinedSingleTextField
 import com.example.presentation.viewmodel.chart.ChartEnrollAction
@@ -52,8 +55,9 @@ fun ChartEnrollScreen(
     navHostController: NavHostController,
     viewModel: ChartEnrollViewModel = hiltViewModel<ChartEnrollViewModel>()
 ) {
-    var titleInput by remember { mutableStateOf(chart?.title.orEmpty()) }
+    val titleInput by viewModel.chartTitle.collectAsState()
     val photoUri by viewModel.imageUri.collectAsState()
+    val context = LocalContext.current
 
     val photoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
@@ -63,11 +67,16 @@ fun ChartEnrollScreen(
     )
 
     LaunchedEffect(Unit) {
+        viewModel.updateChartTitle(chart?.title.orEmpty())
+
         viewModel.eventFlow.collectLatest { event ->
             when (event) {
                 ChartEnrollEvent.OpenGallery -> {
-                    Log.d("tjwh", "ChartEnrollScreen: ")
                     photoPickerLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                }
+                ChartEnrollEvent.CompleteEnroll -> {
+                    Toast.makeText(context, "등록이 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                    navHostController.popBackStack()
                 }
             }
         }
@@ -78,7 +87,7 @@ fun ChartEnrollScreen(
     ) {
         OutlinedSingleTextField(
             input = titleInput,
-            onValueChange = { titleInput = it },
+            onValueChange = { viewModel.updateChartTitle(it) },
             labelString = "종목명을 입력해주세요",
             maxLength = 20
         )
@@ -94,6 +103,7 @@ fun ChartEnrollScreen(
                     .fillMaxWidth()
                     .height(200.dp)
                     .padding(horizontal = Dimens.PaddingExtraLarge)
+                    .clickable { viewModel.dispatch(ChartEnrollAction.ClickUploadImage) }
             ) {
                 AsyncImage(
                     model = photoUri,
@@ -126,6 +136,25 @@ fun ChartEnrollScreen(
                     }
                 }
             }
+        }
+        Spacer(modifier = Modifier.weight(1f))
+        Button(
+            onClick = { viewModel.dispatch(ChartEnrollAction.ClickEnrollChart) },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary,
+                disabledContainerColor = MaterialTheme.colorScheme.surfaceContainer,
+                disabledContentColor = MaterialTheme.colorScheme.onSurfaceVariant
+            ),
+            enabled = ((titleInput.isNotEmpty()) && (photoUri != null)),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = Dimens.PaddingMedium, vertical = Dimens.PaddingLarge)
+        ) {
+            Text(
+                text = "등록하기",
+                style = MaterialTheme.typography.buttonHeadlineMedium
+            )
         }
     }
 }
