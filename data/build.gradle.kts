@@ -1,3 +1,6 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
@@ -9,11 +12,18 @@ android {
     namespace = "com.example.data"
     compileSdk = 36
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     defaultConfig {
         minSdk = 26
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        buildConfigField("String", "MOCK_APP_KEY", gradleLocalProperties(rootDir, providers).getProperty("mock_app_key"))
+        buildConfigField("String", "MOCK_APP_SECRET", gradleLocalProperties(rootDir, providers).getProperty("mock_app_secret"))
     }
 
     buildTypes {
@@ -31,7 +41,7 @@ android {
     }
     kotlin {
         compilerOptions {
-            jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+            jvmTarget = JvmTarget.JVM_17
         }
     }
 }
