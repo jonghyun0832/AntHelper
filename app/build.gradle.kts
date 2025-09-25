@@ -55,6 +55,7 @@ dependencies {
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
     ksp(libs.room.compiler)
+    implementation(libs.data.store)
 
     implementation(libs.gson)
 
@@ -64,8 +65,8 @@ dependencies {
     implementation(libs.okhttp.logging)
 
     implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.auth)
-    implementation(libs.firebase.storage)
+//    implementation(libs.firebase.auth)
+//    implementation(libs.firebase.storage)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
