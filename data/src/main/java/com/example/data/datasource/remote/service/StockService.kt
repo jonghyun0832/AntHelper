@@ -1,4 +1,4 @@
-package com.example.data.service
+package com.example.data.datasource.remote.service
 
 import com.example.data.model.request.TokenRequest
 import com.example.data.model.response.TokenResponse

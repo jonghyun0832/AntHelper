@@ -1,6 +1,10 @@
 package com.example.data.di
 
-import com.example.data.service.StockService
+import com.example.data.datasource.local.StockLocalDataSource
+import com.example.data.datasource.remote.service.StockService
+import com.example.data.interceptor.StockInterceptor
+import com.example.data.interceptor.TokenProvider
+import com.example.data.interceptor.TokenProviderImpl
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -38,8 +42,24 @@ internal object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(
-        loggingInterceptor: HttpLoggingInterceptor
+    fun provideTokenProvider(
+        stockLocalDataSource: StockLocalDataSource
+    ): TokenProvider = TokenProviderImpl(stockLocalDataSource)
+
+    @Provides
+    @Singleton
+    fun provideStockInterceptor(
+        tokenProvider: TokenProvider
+    ): StockInterceptor {
+        return StockInterceptor(tokenProvider)
+    }
+
+    @Provides
+    @Singleton
+    @NoAuthStockOkHttpClient
+    fun provideNoAuthStockOkHttpClient(
+        loggingInterceptor: HttpLoggingInterceptor,
+        stockInterceptor: StockInterceptor
     ): OkHttpClient {
         return OkHttpClient.Builder().apply {
             connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
@@ -55,7 +75,31 @@ internal object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit {
+    @AuthStockOkHttpClient
+    fun provideAuthStockOkHttpClient(
+        loggingInterceptor: HttpLoggingInterceptor,
+        stockInterceptor: StockInterceptor
+    ): OkHttpClient {
+        return OkHttpClient.Builder().apply {
+            connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
+            writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
+            readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
+            addInterceptor(stockInterceptor)
+            addInterceptor(loggingInterceptor)
+        }.build()
+//        if (BuildConfig.DEBUG) {
+//            builder.addInterceptor(interceptor)
+//        }
+        // TODO : Debug인 경우에만 interceptor 추가
+    }
+
+    @Provides
+    @Singleton
+    @NoAuthStockRetrofit
+    fun provideNoAuthStockRetrofit(
+        gson: Gson,
+        @NoAuthStockOkHttpClient okHttpClient: OkHttpClient
+    ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(MOCK_BASE_URL_STOCK)
             .addConverterFactory(GsonConverterFactory.create(gson))
@@ -65,7 +109,21 @@ internal object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideStockService(retrofit: Retrofit): StockService {
+    @AuthStockRetrofit
+    fun provideAuthStockRetrofit(
+        gson: Gson,
+        @AuthStockOkHttpClient okHttpClient: OkHttpClient
+    ): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(MOCK_BASE_URL_STOCK)
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .client(okHttpClient)
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideStockService(@NoAuthStockRetrofit retrofit: Retrofit): StockService {
         return retrofit.create(StockService::class.java)
     }
 }
