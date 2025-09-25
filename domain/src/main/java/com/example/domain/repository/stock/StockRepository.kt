@@ -4,4 +4,5 @@ import com.example.domain.model.Token
 
 interface StockRepository {
     suspend fun getAuthToken(): Token
+    suspend fun revokeToken()
 }

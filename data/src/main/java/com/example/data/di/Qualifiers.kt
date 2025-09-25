@@ -17,3 +17,11 @@ annotation class AuthStockRetrofit
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class NoAuthStockRetrofit
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class NoAuthStockService
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class AuthStockService

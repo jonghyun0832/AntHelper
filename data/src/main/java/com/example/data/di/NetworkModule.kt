@@ -2,6 +2,7 @@ package com.example.data.di
 
 import com.example.data.datasource.local.StockLocalDataSource
 import com.example.data.datasource.remote.service.StockService
+import com.example.data.datasource.remote.service.TokenService
 import com.example.data.interceptor.StockInterceptor
 import com.example.data.interceptor.TokenProvider
 import com.example.data.interceptor.TokenProviderImpl
@@ -58,8 +59,7 @@ internal object NetworkModule {
     @Singleton
     @NoAuthStockOkHttpClient
     fun provideNoAuthStockOkHttpClient(
-        loggingInterceptor: HttpLoggingInterceptor,
-        stockInterceptor: StockInterceptor
+        loggingInterceptor: HttpLoggingInterceptor
     ): OkHttpClient {
         return OkHttpClient.Builder().apply {
             connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
@@ -123,7 +123,15 @@ internal object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideStockService(@NoAuthStockRetrofit retrofit: Retrofit): StockService {
+    @NoAuthStockService
+    fun provideTokenService(@NoAuthStockRetrofit retrofit: Retrofit): TokenService {
+        return retrofit.create(TokenService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    @AuthStockService
+    fun provideStockService(@AuthStockRetrofit retrofit: Retrofit): StockService {
         return retrofit.create(StockService::class.java)
     }
 }

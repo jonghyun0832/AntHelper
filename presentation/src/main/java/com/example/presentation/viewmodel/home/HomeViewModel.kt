@@ -17,4 +17,10 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun revokeStockToken() {
+        viewModelScope.launch {
+            stockRepository.revokeToken()
+        }
+    }
+
 }

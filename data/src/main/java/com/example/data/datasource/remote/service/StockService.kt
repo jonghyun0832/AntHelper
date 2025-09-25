@@ -1,16 +1,15 @@
 package com.example.data.datasource.remote.service
 
-import com.example.data.model.request.TokenRequest
-import com.example.data.model.response.TokenResponse
+import com.example.data.model.request.TokenRevokeRequest
+import com.example.data.model.response.DefaultResponse
 import retrofit2.http.Body
 import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface StockService {
-    @POST("/oauth2/token")
-    suspend fun getAuthToken(
-        @Header("api-id") apiId: String = "au10001",
-        @Header("Content-Type") contentType: String = "application/json;charset=UTF-8",
-        @Body request: TokenRequest
-    ): TokenResponse
+    @POST("/oauth2/revoke")
+    suspend fun revokeAccessToken(
+        @Header("api-id") apiId: String = "au10002",
+        @Body request: TokenRevokeRequest,
+    ): DefaultResponse
 }
