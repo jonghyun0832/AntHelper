@@ -1,7 +1,7 @@
 package com.example.data.repositoryImpl
 
 import com.example.data.BuildConfig
-import com.example.data.datasource.local.StockLocalDataSource
+import com.example.data.datasource.local.datasource.StockLocalDataSource
 import com.example.data.datasource.remote.service.StockService
 import com.example.data.datasource.remote.service.TokenService
 import com.example.data.di.AuthStockService

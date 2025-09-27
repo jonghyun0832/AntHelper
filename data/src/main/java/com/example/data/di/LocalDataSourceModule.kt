@@ -1,7 +1,7 @@
 package com.example.data.di
 
-import com.example.data.datasource.local.Impl.StockLocalDataSourceImpl
-import com.example.data.datasource.local.StockLocalDataSource
+import com.example.data.datasource.local.datasourceImpl.StockLocalDataSourceImpl
+import com.example.data.datasource.local.datasource.StockLocalDataSource
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

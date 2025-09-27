@@ -3,7 +3,7 @@ package com.example.data.di
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import com.example.data.datasource.local.datastore.stockDataStore
+import com.example.data.datasource.local.stockDataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

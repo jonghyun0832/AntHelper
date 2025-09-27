@@ -1,4 +1,4 @@
-package com.example.data.datasource.local
+package com.example.data.datasource.local.datasource
 
 interface StockLocalDataSource {
     suspend fun saveToken(token: String)

@@ -1,6 +1,6 @@
 package com.example.data.interceptor
 
-import com.example.data.datasource.local.StockLocalDataSource
+import com.example.data.datasource.local.datasource.StockLocalDataSource
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 import javax.inject.Singleton

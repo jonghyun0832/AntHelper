@@ -1,10 +1,10 @@
-package com.example.data.datasource.local.Impl
+package com.example.data.datasource.local.datasourceImpl
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.example.data.datasource.local.StockLocalDataSource
+import com.example.data.datasource.local.datasource.StockLocalDataSource
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
