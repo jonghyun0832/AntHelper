@@ -5,8 +5,8 @@ import androidx.compose.ui.graphics.Color
 
 @Immutable
 data class ExtendedColors(
-    val myExtendColor1 : Color,
-    val myExtendColor2 : Color,
-    val myExtendColor3 : Color,
+    val up : Color,
+    val down : Color,
+    val stable : Color,
     val myExtendColor4 : Color
 )

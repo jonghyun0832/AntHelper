@@ -58,12 +58,12 @@ fun MyInfoScreen() {
         Text(
             text = "Theme Test8",
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.extendedColors.myExtendColor1
+            color = MaterialTheme.extendedColors.up
         )
         Text(
             text = "Theme Test9",
             style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.extendedColors.myExtendColor2
+            color = MaterialTheme.extendedColors.down
         )
     }
 }

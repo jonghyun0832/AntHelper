@@ -62,15 +62,15 @@ val DarkColorScheme = darkColorScheme(
 
 
 val extendedColorLight = ExtendedColors(
-    myExtendColor1 = Color(0xFFFFFFFF),
-    myExtendColor2 = Color(0xFF00FFFF),
-    myExtendColor3 = Color(0xFFFF00FF),
+    up = Color(0xFFFF0000),
+    down = Color(0xFF0000FF),
+    stable = Color(0xFF646464),
     myExtendColor4 = Color(0xFFFFFF00)
 )
 
 val extendedColorDark = ExtendedColors(
-    myExtendColor1 = Color(0xFF000000),
-    myExtendColor2 = Color(0xFFFF0000),
-    myExtendColor3 = Color(0xFF00FF00),
+    up = Color(0xFFFF0000),
+    down = Color(0xFF0000FF),
+    stable = Color(0xFFC9C9C9),
     myExtendColor4 = Color(0xFF0000FF)
 )
