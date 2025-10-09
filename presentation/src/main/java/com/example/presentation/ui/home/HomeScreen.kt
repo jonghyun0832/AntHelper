@@ -119,3 +119,5 @@ fun HomeExchangeCard() {
         )
     }
 }
+
+// TODO : fastAPI 연결 / fastAPI에 RSI 지수 가져오기 / fastAPI에 환율 정보 가져오기 / 이전 RSI 지수, 환율 정보는 csv로 가져와서 직접 데이터베이스에 넣어주기 / 데이터베이스 연결 / 가져온 정보로 홈 화면 구현
