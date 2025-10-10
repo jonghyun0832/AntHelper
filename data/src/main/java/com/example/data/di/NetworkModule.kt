@@ -1,6 +1,7 @@
 package com.example.data.di
 
 import com.example.data.datasource.local.datasource.StockLocalDataSource
+import com.example.data.datasource.remote.service.RsiService
 import com.example.data.datasource.remote.service.StockService
 import com.example.data.datasource.remote.service.TokenService
 import com.example.data.interceptor.StockInterceptor
@@ -22,6 +23,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 internal object NetworkModule {
+    private const val BASE_SERVER_URL = "http://10.0.2.2:8000/"
     private const val BASE_URL_STOCK = "https://api.kiwoom.com"
     private const val MOCK_BASE_URL_STOCK = "https://mockapi.kiwoom.com"
 
@@ -53,6 +55,24 @@ internal object NetworkModule {
         tokenProvider: TokenProvider
     ): StockInterceptor {
         return StockInterceptor(tokenProvider)
+    }
+
+    @Provides
+    @Singleton
+    @NoAuthOkHttpClient
+    fun provideNoAuthOkHttpClient(
+        loggingInterceptor: HttpLoggingInterceptor
+    ): OkHttpClient {
+        return OkHttpClient.Builder().apply {
+            connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
+            writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
+            readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
+            addInterceptor(loggingInterceptor)
+        }.build()
+//        if (BuildConfig.DEBUG) {
+//            builder.addInterceptor(interceptor)
+//        }
+        // TODO : Debug인 경우에만 interceptor 추가
     }
 
     @Provides
@@ -95,6 +115,20 @@ internal object NetworkModule {
 
     @Provides
     @Singleton
+    @NoAuthRetrofit
+    fun provideNoAuthRetrofit(
+        gson: Gson,
+        @NoAuthOkHttpClient okHttpClient: OkHttpClient
+    ): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(BASE_SERVER_URL)
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .client(okHttpClient)
+            .build()
+    }
+
+    @Provides
+    @Singleton
     @NoAuthStockRetrofit
     fun provideNoAuthStockRetrofit(
         gson: Gson,
@@ -119,6 +153,13 @@ internal object NetworkModule {
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(okHttpClient)
             .build()
+    }
+
+    @Provides
+    @Singleton
+    @NoAuthService
+    fun provideRsiService(@NoAuthRetrofit retrofit: Retrofit): RsiService {
+        return retrofit.create(RsiService::class.java)
     }
 
     @Provides

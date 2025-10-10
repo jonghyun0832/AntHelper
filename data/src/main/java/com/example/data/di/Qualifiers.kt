@@ -4,6 +4,10 @@ import javax.inject.Qualifier
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
+annotation class NoAuthOkHttpClient
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
 annotation class AuthStockOkHttpClient
 
 @Qualifier
@@ -12,11 +16,19 @@ annotation class NoAuthStockOkHttpClient
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
+annotation class NoAuthRetrofit
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
 annotation class AuthStockRetrofit
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class NoAuthStockRetrofit
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class NoAuthService
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)

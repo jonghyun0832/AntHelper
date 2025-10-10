@@ -39,14 +39,16 @@ fun HomeScreen(
             .verticalScroll(scrollState)
             .padding(Dimens.PaddingMedium)
     ) {
-        HomeIndexCard()
+        HomeIndexCard(viewModel)
         Spacer(modifier = Modifier.height(Dimens.PaddingExtraLarge))
         HomeExchangeCard()
     }
 }
 
 @Composable
-fun HomeIndexCard() {
+fun HomeIndexCard(
+    viewModel: HomeViewModel
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -64,7 +66,9 @@ fun HomeIndexCard() {
         )
 
         IconButton(
-            onClick = {}
+            onClick = {
+                viewModel.getRsi()
+            }
         ) {
             Icon(
                 imageVector = Icons.Filled.Refresh,
