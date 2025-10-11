@@ -1,5 +1,6 @@
 package com.example.domain.model
 
 data class Rsi(
-    val message: String
+    val kospi: RsiIndex,
+    val kosdaq: RsiIndex
 )

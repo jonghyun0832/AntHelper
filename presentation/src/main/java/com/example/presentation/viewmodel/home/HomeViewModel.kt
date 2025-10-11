@@ -28,7 +28,7 @@ class HomeViewModel @Inject constructor(
 
     fun getRsi() {
         viewModelScope.launch {
-            val rsi = rsiRepository.test()
+            val rsi = rsiRepository.getRsi()
             Log.d("tjwh", "getRsi: $rsi")
         }
     }

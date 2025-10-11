@@ -10,7 +10,7 @@ import javax.inject.Inject
 class RsiRepositoryImpl @Inject constructor(
     @param:NoAuthService private val rsiService: RsiService
 ) : RsiRepository {
-    override suspend fun test(): Rsi {
-        return rsiService.test().toDomain()
+    override suspend fun getRsi(): Rsi {
+        return rsiService.getRsi().toDomain()
     }
 }
